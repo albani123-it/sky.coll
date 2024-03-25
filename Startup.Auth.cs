@@ -44,6 +44,7 @@ namespace sky.coll
                 Path = Configuration.GetSection("TokenAuthentication:TokenPath").Value,
                 Audience = Configuration.GetSection("TokenAuthentication:Audience").Value,
                 Issuer = Configuration.GetSection("TokenAuthentication:Issuer").Value,
+                code = Configuration.GetSection("TokenAuthentication:licen").Value,
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
                 IdentityResolver = GetIdentity
             };

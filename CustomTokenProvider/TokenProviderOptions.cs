@@ -13,7 +13,7 @@ namespace CustomTokenAuthProvider
         /// <remarks>The default path is <c>/token</c>.</remarks>
         public string Path { get; set; } = "/token";
 
-        public string code { get; set; } = "4D+ysXnnd1o2/FbBxeQaPg9yGsnAMqQ5et1Bn6yp6ag=";
+        public string code { get; set; }
 
         public string key { get; set; } = "SkyW0rxRnDC0n5ult1n9";
 

@@ -69,24 +69,115 @@ namespace sky.coll.Controllers
             return result;
         }
 
-        public string ExecPostAPISignature(string url, string allText, string relativepath, string Timestamp)
+        public string ExecPostAPILoginBrikerbox(string WebAPIURL, JObject req)
         {
 
-            var WebAPIURL = dbconn.domainGetApi(url);
-            var api_key = dbconn.domainGetTokenCredential("API_Key");
+          
+            var usersid = dbconn.domainGetCredential("usersid");
+            var passwd = dbconn.domainGetCredential("password");
             //var Timestamp = dbconn.domainGetTokenCredential("Timestamp");
-            
+            //var req = JObject.Parse(allText.ToString());
 
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Timestamp", Timestamp);
-            client.DefaultRequestHeaders.Add("API-Key", api_key);
-            client.DefaultRequestHeaders.Add("requestmethod", "POST");
-            client.DefaultRequestHeaders.Add("relativepath", relativepath);
-            var contentData = new StringContentWithoutCharset(allText, "application/json");
+            client.DefaultRequestHeaders.Add("adm", usersid);
+            client.DefaultRequestHeaders.Add("pass", passwd);
+            var contentData = new StringContentWithoutCharset(req.ToString(), "application/json");
 
             HttpResponseMessage response = client.PostAsync(WebAPIURL, contentData).Result;
             string result = response.Content.ReadAsStringAsync().Result;
             return result;
+        }
+
+        public bool LoginAgent(string ticket, string agent, string code, string WebAPIURL)
+        {
+
+            var jreq = new JObject();
+
+            jreq.Add("cmd", "agentcc");
+            jreq.Add("event", "login");
+            jreq.Add("queue", "1000");
+            jreq.Add("agent", agent);
+            jreq.Add("device", code);
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("ticket", ticket);
+            var contentData = new StringContentWithoutCharset(jreq.ToString(), "application/json");
+
+            HttpResponseMessage response = client.PostAsync(WebAPIURL, contentData).Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            if (result != "")
+            {
+               
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+
+        }
+
+        public bool DoCall(string ticket, string nohp, string agent, string code, string WebAPIURL)
+        {
+
+            var jreq = new JObject();
+
+            jreq.Add("cmd", "ctc");
+            jreq.Add("dialto", nohp);
+            jreq.Add("timeout", "30");
+            jreq.Add("cid", agent);
+            jreq.Add("v", nohp + "#" + code);
+
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("ticket", ticket);
+            var contentData = new StringContentWithoutCharset(jreq.ToString(), "application/json");
+
+            HttpResponseMessage response = client.PostAsync(WebAPIURL, contentData).Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            if (result != "")
+            {
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+
+        public bool LogoutAgent(string ticket, string agent, string code, string WebAPIURL)
+        {
+
+            var jreq = new JObject();
+
+            jreq.Add("cmd", "agentcc");
+            jreq.Add("event", "logoff");
+            jreq.Add("queue", "1000");
+            jreq.Add("agent", agent);
+            jreq.Add("device", code);
+
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("ticket", ticket);
+            var contentData = new StringContentWithoutCharset(jreq.ToString(), "application/json");
+
+            HttpResponseMessage response = client.PostAsync(WebAPIURL, contentData).Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            if (result != "")
+            {
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
         }
 
         public class StringContentWithoutCharset : StringContent
@@ -909,6 +1000,10 @@ namespace sky.coll.Controllers
                             if (pars[2] == "i")
                             {
                                 cmd.Parameters.AddWithValue((pars[0].ToString()).Replace("@", "p_"), Convert.ToInt32(pars[1]));
+                            }
+                            else if (pars[2] == "bg")
+                            {
+                                cmd.Parameters.AddWithValue((pars[0].ToString()).Replace("@", "p_"), Convert.ToInt64(pars[1]));
                             }
                             else if (pars[2] == "s")
                             {

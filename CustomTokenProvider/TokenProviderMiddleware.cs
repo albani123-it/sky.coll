@@ -64,8 +64,11 @@ namespace CustomTokenAuthProvider
                         {
                             var decoded_token = handler.ReadJwtToken(authBits[1]);
                             var tokentime = decoded_token.ValidTo.AddHours(7);
+                            var sid = decoded_token.Claims.ToList()[1].Value;
                             List<string> tokenaudience = (from string str in decoded_token.Audiences
                                                           select str.ToString()).ToList();
+
+                            var expireddate = DateTime.ParseExact(sid, "MMyy", CultureInfo.InvariantCulture).AddMonths(1).AddDays(-1);
 
                             if (tokentime < DateTime.Now)
                             {
@@ -84,6 +87,25 @@ namespace CustomTokenAuthProvider
                                // lsl.ServiceRecordLogs(context.Request.Method.ToString(), context.Request.Path.Value.ToString(), "Authenticated Failed", joReturn.ToString());
 
                                 return context.Response.WriteAsync(JsonConvert.SerializeObject(errresponse, _serializerSettings));
+                            }
+                            else if (expireddate < DateTime.Now)
+                            {
+                                condition = false;
+                                var errresponse = new
+                                {
+                                    authenticated = false,
+                                    message = "Invalid access, license  expired.",
+                                    date = DateTime.Now
+                                };
+                                context.Response.ContentType = "application/json";
+
+                                var strJTkn = (JToken.FromObject(errresponse)).ToString();
+                                joReturn.Add("success", false);
+                                joReturn.Add("data", JObject.Parse(strJTkn));
+                                // lsl.ServiceRecordLogs(context.Request.Method.ToString(), context.Request.Path.Value.ToString(), "Authenticated Failed", joReturn.ToString());
+
+                                return context.Response.WriteAsync(JsonConvert.SerializeObject(errresponse, _serializerSettings));
+
                             }
                             else if (tokenaudience[0].ToString() != Audiences)
                             {
@@ -268,9 +290,11 @@ namespace CustomTokenAuthProvider
 
 
             var now = DateTime.UtcNow;
+            var expired = joReturn.GetValue("mmyy").ToString();
             var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(JwtRegisteredClaimNames.Sid, expired),
                 new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };
@@ -322,12 +346,14 @@ namespace CustomTokenAuthProvider
                     data = new JObject();
                     data.Add("status", "false");
                     data.Add("message", "Sorry your license has expired. Please contact administrator!");
+                    data.Add("mmyy", mmyy);
                 }
                 else
                 {
                     data = new JObject();
                     data.Add("status", "true");
                     data.Add("message", "Success");
+                    data.Add("mmyy", mmyy);
                 }
             }
             catch (Exception ex)

@@ -93,7 +93,7 @@ namespace sky.coll.Controllers
             {
                 data = new JObject();
                 var ids = Int32.Parse(json.GetValue("id").ToString());
-                retObject = ldl.GetDetailColl(ids);
+                retObject = ldl.GetDetailSmsContentByid(ids);
                 data.Add("status", mc.GetMessage("api_output_ok"));
                 data.Add("message", mc.GetMessage("process_success"));
                 data.Add("data", lc.convertDynamicToJArray(retObject));
@@ -167,7 +167,7 @@ namespace sky.coll.Controllers
                         jsonData.Add("created_by", jaData[i]["lsc_created_by"].ToString());
                         jsonData.Add("modified_by", jaData[i]["lsc_modified_by"].ToString());
                         jsonData.Add("approved_status", jaData[i]["lsc_approved_status"].ToString());
-                        jsonData.Add("p_user", json.GetValue("user"));
+                        jsonData.Add("user", json.GetValue("user"));
                         jsonData.Add("p_logid", json.GetValue("p_logid"));
                         jsonData.Add("p_version", version);
 
@@ -500,7 +500,7 @@ namespace sky.coll.Controllers
             var provider = dbconn.sqlprovider();
             var cstrname = dbconn.constringName("skycoll");
 
-            string spname = "log.get_coll_insert_log";
+            string spname = "log.get_sms_content_insert_log";
             string p1 = "p_id," + data.GetValue("id").ToString() + ",bg";
             string p2 = "p_code," + data.GetValue("lsc_code").ToString() + ",s";
             string p3 = "p_name," + data.GetValue("lsc_name").ToString() + ",s";
@@ -669,7 +669,7 @@ namespace sky.coll.Controllers
                         retObject = this.InsertLogCallScript(jsonData, "INSERT");
                     }
 
-                    string spname1 = "masters.insert_parameter_versions_callscript";
+                    string spname1 = "masters.insert_parameter_versions";
                     string p11 = "p_module|" + "callscript" + "|s";
                     string p12 = "p_version|" + version + "|s";
                     bc.execSqlWithSplitPipeline(provider, cstrname_en, spname1, p11, p12);
@@ -950,7 +950,7 @@ namespace sky.coll.Controllers
                             jsonData.Add("csc_accd_max", jaData[i]["csc_accd_max"].ToString());
                             jsonData.Add("script", jaData[i]["csc_cs_script"].ToString());
                             jsonData.Add("is_active", jaData[i]["csc_is_active"].ToString());
-                            jsonData.Add("created_by", jaData[i]["csc_created_by"].ToString());
+                            jsonData.Add("created_by", jaData[i]["created_by"].ToString());
                             jsonData.Add("modified_by", jaData[i]["csc_modified_by"].ToString());
                             jsonData.Add("approved_status", jaData[i]["csc_approved_status"].ToString());
                             jsonData.Add("user", json.GetValue("user"));
@@ -1005,8 +1005,8 @@ namespace sky.coll.Controllers
             string p3 = "p_desc," + data.GetValue("csc_desc").ToString() + ",s";
             string p4 = "p_accd_min," + data.GetValue("csc_accd_min") + ",i";
             string p5 = "p_accd_max," + data.GetValue("csc_accd_max") + ",i";
-            string p6 = "p_script," + data.GetValue("csc_cs_script") + ",s";
-            string p7 = "p_isactive," + data.GetValue("csc_is_active") + ",s";
+            string p6 = "p_script," + data.GetValue("script") + ",s";
+            string p7 = "p_isactive," + data.GetValue("is_active") + ",s";
             string p8 = "p_createdby," + data.GetValue("created_by") + ",s";
             string p9 = "p_updateby," + data.GetValue("modified_by") + ",s";
             string p10 = "p_approval_status," + data.GetValue("approved_status") + ",s";
@@ -1502,7 +1502,7 @@ namespace sky.coll.Controllers
             string p3 = "p_name," + data.GetValue("rsn_name").ToString() + ",s";
             string p4 = "p_is_dc," + data.GetValue("rsn_is_dc") + ",i";
             string p5 = "p_is_fc," + data.GetValue("rsn_is_fc") + ",i";
-            string p6 = "p_isactive," + data.GetValue("csc_is_active") + ",s";
+            string p6 = "p_isactive," + data.GetValue("is_active") + ",s";
             string p7 = "p_createdby," + data.GetValue("created_by") + ",s";
             string p8 = "p_updateby," + data.GetValue("modified_by") + ",s";
             string p9 = "p_approval_status," + data.GetValue("approved_status") + ",s";
