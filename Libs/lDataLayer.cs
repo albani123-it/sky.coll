@@ -732,16 +732,17 @@ namespace sky.coll.Libs
             return retObject;
         }
 
-        //public List<dynamic> GetDataContactFC(JObject json)
-        //{
-        //    var provider = dbconn.sqlprovider();
-        //    var cstrname = dbconn.constringName("skycoll");
-        //    string spname = "public.get_data_contact_fc";
-        //    string p1 = "p_id," + json.GetValue("id").ToString() + ",bg";
-        //    var retObject = new List<dynamic>();
-        //    retObject = bc.getDataToObject(provider, cstrname, spname, p1);
-        //    return retObject;
-        //}
+        public List<dynamic> GetDataContactFCbyMasterCust(JObject json)
+        {
+            var provider = dbconn.sqlprovider();
+            var cstrname = dbconn.constringName("skycoll");
+
+            string spname = "public.get_data_contact_fc_v2";
+            string p1 = "p_loanid," + json.GetValue("id").ToString() + ",i";
+            var retObject = new List<dynamic>();
+            retObject = bc.getDataToObject(provider, cstrname, spname, p1);
+            return retObject;
+        }
 
         public JArray GetDataContactFC(JObject json)
         {
@@ -753,13 +754,15 @@ namespace sky.coll.Libs
             var schema = "public";
 
             string spname = "get_data_contact_fc";
-            string p1 = "p_loanid" + split + json.GetValue("id").ToString() + split + "bg";
+            string p1 = "p_loanid" + split + json.GetValue("id").ToString() + split + "i";
             var retObject = new List<dynamic>();
             retObject = bc.ExecSqlWithReturnCustomSplit(provider, cstrname, split, schema, spname, p1);
             jaReturn = lc.convertDynamicToJArray(retObject);
 
             return jaReturn;
         }
+
+   
 
         public JArray Getlistjanjibayarfc(string usrid)
         {

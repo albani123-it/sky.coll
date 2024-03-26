@@ -520,6 +520,8 @@ namespace sky.coll.Controllers
                     }
                     else
                     {
+                        retcontact = ldl.GetDataContactFCbyMasterCust(json);
+
                         var nohp = retcontact[0].no_hp;
                         string[] nohpsplt = nohp.Split("]");
                         for (int i = 0; i < nohpsplt.Length; i++)
