@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Utilities.Collections;
+using sky.coll.Interfaces;
+using sky.coll.Services;
 
 namespace sky.coll
 {
@@ -27,6 +30,8 @@ namespace sky.coll
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+         
+
         }
 
         public IConfiguration Configuration { get; }
@@ -34,6 +39,7 @@ namespace sky.coll
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ICustomer, CustomerServices>();
             services.AddControllers().AddNewtonsoftJson();
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddLogging(loggingBuilder =>

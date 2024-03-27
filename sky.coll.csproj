@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="General\Helper\" />
     <Folder Include="Models\" />
-    <Folder Include="DTO\" />
   </ItemGroup>
 
 </Project>
