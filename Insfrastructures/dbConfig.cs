@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using sky.coll.Entities;
+using System.IO;
 
 
 namespace sky.coll.Insfrastructures
@@ -10,9 +12,14 @@ namespace sky.coll.Insfrastructures
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var SQLCons = "Host=103.53.197.67;Database=sky.coll;Username=postgres;Password=User123!";
+            var builder = new ConfigurationBuilder()
+                 .SetBasePath(Directory.GetCurrentDirectory())
+                 .AddJsonFile("appsettings.json");
+            var config = builder.Build();
+            var Connstring= config.GetSection("DbContextSettings:ConnectionString_coll").Value.ToString();
+            //var SQLCons = "Host=103.53.197.67;Database=sky.coll;Username=postgres;Password=User123!";
 
-            optionsBuilder.UseNpgsql(SQLCons);
+            optionsBuilder.UseNpgsql(Connstring);
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
