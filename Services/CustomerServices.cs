@@ -5,13 +5,14 @@ using sky.coll.Insfrastructures;
 using sky.coll.Interfaces;
 using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace sky.coll.Services
 {
     public class CustomerServices:dbConfig,ICustomer
     {
-        public async Task<(bool Error, GeneralResponses Return)> GetListNasabah()
+        public async Task<(bool Error, GeneralResponses Return)> GetListNasabah(int PageNumber,int PageSize)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace sky.coll.Services
                     city=es.city,
                     provinsi=es.provinsi,
                     cu_mobilephone=es.cu_mobilephone
-                }).ToListAsync();
+                }).Skip((PageNumber-1)*PageSize).Take(PageSize).ToListAsync();
                 var Returns = new GeneralResponses()
                 {
                     Error=false,

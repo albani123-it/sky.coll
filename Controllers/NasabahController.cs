@@ -19,12 +19,12 @@ namespace sky.coll.Controllers
             _Customer = Customer;
         }
 
-        [HttpGet("GetListNasabah")]
-        public async Task<ActionResult<GeneralResponses>> GetlistNasabah()
+        [HttpGet("GetListNasabah/{PageNumber}/{PageSize}")]
+        public async Task<ActionResult<GeneralResponses>> GetlistNasabah(int PageNumber,int PageSize)
         {
             try
             {
-                var GetData = await _Customer.GetListNasabah();
+                var GetData = await _Customer.GetListNasabah(PageNumber,PageSize);
                 if (GetData.Error == true)
                 {
                     return BadRequest(GetData.Return);

@@ -5,7 +5,7 @@ namespace sky.coll.Interfaces
 {
     public interface ICustomer
     {
-        public  Task<(bool Error, GeneralResponses Return)> GetListNasabah();
+        public  Task<(bool Error, GeneralResponses Return)> GetListNasabah(int PageNumber, int PageSize);
 
     }
 }
