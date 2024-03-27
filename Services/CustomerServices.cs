@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using sky.coll.DTO;
+using sky.coll.General;
 using sky.coll.General.Responses;
 using sky.coll.Insfrastructures;
 using sky.coll.Interfaces;
@@ -10,8 +12,12 @@ using System.Threading.Tasks;
 
 namespace sky.coll.Services
 {
-    public class CustomerServices:dbConfig,ICustomer
+    public class CustomerServices:dbConfig, ICustomer
     {
+        public CustomerServices(IOptions<DbContextSettings> appsetting) : base(appsetting)
+        {
+        }
+
         public async Task<(bool Error, GeneralResponses Return)> GetListNasabah(int PageNumber,int PageSize)
         {
             try
