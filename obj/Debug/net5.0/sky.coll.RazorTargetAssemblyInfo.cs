@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyProductAttribute("sky.coll")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04247f66d58b9e016ae6a4cc02e1d8d05163d4a5")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sky.coll.Views")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 

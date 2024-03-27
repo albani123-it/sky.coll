@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PROJECT ALL\\API\\digilend\\sky.coll\\sky.coll.csproj": {}
+    "D:\\Project\\SKYPROJECT\\SKY.COLL2\\sky.coll.csproj": {}
   },
   "projects": {
-    "D:\\PROJECT ALL\\API\\digilend\\sky.coll\\sky.coll.csproj": {
+    "D:\\Project\\SKYPROJECT\\SKY.COLL2\\sky.coll.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PROJECT ALL\\API\\digilend\\sky.coll\\sky.coll.csproj",
+        "projectUniqueName": "D:\\Project\\SKYPROJECT\\SKY.COLL2\\sky.coll.csproj",
         "projectName": "sky.coll",
-        "projectPath": "D:\\PROJECT ALL\\API\\digilend\\sky.coll\\sky.coll.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\PROJECT ALL\\API\\digilend\\sky.coll\\obj\\",
+        "projectPath": "D:\\Project\\SKYPROJECT\\SKY.COLL2\\sky.coll.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "D:\\Project\\SKYPROJECT\\SKY.COLL2\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -63,6 +60,12 @@
               "target": "Package",
               "version": "[5.0.8, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -70,6 +73,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[5.0.7, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
+              "target": "Package",
+              "version": "[1.1.0, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",
@@ -82,7 +89,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -94,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
